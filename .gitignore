@@ -1,0 +1,13 @@
+node_modules/
+.env
+*.env
+!.env.example
+confluence-auth.json
+aha-auth.json
+output/
+.venv/
+  __pycache__/
+  *.pyc
+  .DS_Store
+  .idea/
+  .vscode/

@@ -1,0 +1,181 @@
+# Output Schema for the Architectural Analysis Document
+# ======================================================
+# Defines the structure of the final deliverable.
+# The agent MUST produce all required sections. Optional sections are included
+# when relevant data is available.
+
+document:
+  format: markdown
+  file_pattern: "output/{slug}-architecture-analysis.md"
+  temp_file_pattern: "output/{slug}-temp-analysis.md"
+
+  metadata:
+    title:
+      type: string
+      format: "Architectural Analysis: {problem_title}"
+      required: true
+    problem_statement:
+      type: string
+      required: true
+    date:
+      type: string
+      format: "YYYY-MM-DD"
+      required: true
+    status:
+      type: string
+      enum: ["DRAFT", "REVIEW", "FINAL"]
+      required: true
+
+  sections:
+
+    - number: 1
+      title: "Executive Summary"
+      required: true
+      max_length: "5 sentences"
+      must_contain:
+        - "Problem statement (1-2 sentences)"
+        - "Recommended solution with primary justification"
+        - "Key trade-off acknowledged"
+
+    - number: 2
+      title: "Problem Understanding"
+      required: true
+      subsections:
+        - title: "Business Objective"
+          required: true
+        - title: "Technical Challenge"
+          required: true
+        - title: "Success Criteria"
+          required: true
+          note: "Measurable where possible"
+        - title: "Scope Boundaries"
+          required: true
+          must_contain: ["In scope list", "Out of scope list"]
+
+    - number: 3
+      title: "Context Landscape"
+      required: true
+      subsections:
+        - title: "Existing Systems"
+          required: true
+          source: "confluence-research-agent or direct search"
+          note: "Can state 'No existing system research conducted' if not applicable"
+        - title: "Product Scope"
+          required: false
+          source: "aha-research-agent"
+          note: "Include only if Aha epic URL was provided"
+        - title: "Codebase Analysis"
+          required: false
+          source: "lead_developer sub-agent"
+          note: "Include only if repo paths were provided"
+
+    - number: 4
+      title: "Assumptions & Unknowns"
+      required: true
+      subsections:
+        - title: "Known Facts"
+          required: true
+          format: "table with columns: Fact, Source"
+        - title: "Assumptions"
+          required: true
+          format: "table with columns: #, Assumption, Confidence (HIGH/MEDIUM/LOW), If Wrong Changes..."
+        - title: "Information Gaps"
+          required: true
+        - title: "Deferrable Decisions"
+          required: true
+
+    - number: 5
+      title: "Solution Proposals"
+      required: true
+      min_solutions: 2
+      max_solutions: 4
+      must_include_simplest_path: true
+      per_solution:
+        - title: "Overview"
+          required: true
+          must_contain: ["1-paragraph description", "Mermaid architecture diagram"]
+        - title: "How It Works"
+          required: true
+          must_contain: ["Data flow", "Control flow", "Key components table", "Integration points"]
+        - title: "Arguments FOR This Approach"
+          required: true
+          must_contain: ["Technical merits", "Business alignment", "Organizational fit", "Operational characteristics"]
+        - title: "Arguments AGAINST This Approach"
+          required: true
+          must_contain: ["Technical risks", "Complexity cost", "Organizational friction", "What could go wrong"]
+        - title: "Failure Mode Analysis"
+          required: true
+          format: "table with columns: Failure Scenario, Impact, Detection, Recovery, Blast Radius"
+        - title: "Reversibility Assessment"
+          required: true
+          must_contain: ["One-way doors list", "Two-way doors list"]
+        - title: "Operational Impact"
+          required: true
+          must_contain: ["On-call burden", "Monitoring requirements", "Deployment complexity", "Team cognitive load"]
+        - title: "Implementation Sketch"
+          required: true
+          format: "table with columns: Phase, Description, Effort (S/M/L/XL), Dependencies"
+
+    - number: 6
+      title: "Comparative Analysis"
+      required: true
+      format: "side-by-side table across all solutions"
+      dimensions:
+        - "Complexity"
+        - "Scalability"
+        - "Timeline"
+        - "Risk"
+        - "Operational Burden"
+        - "Reversibility"
+        - "Team Fit"
+        - "Business Alignment"
+
+    - number: 7
+      title: "Recommendation Scoring"
+      required: true
+      subsections:
+        - title: "Weights Applied"
+          required: true
+          format: "table with columns: Dimension, Weight, Rationale"
+        - title: "Scores"
+          required: true
+          format: "table with columns: Dimension, Weight, [Score + Justification per solution]"
+          rules:
+            - "No 10s or 1s without explicit justification"
+            - "Scores are relative between solutions"
+            - "Each score has a 1-sentence justification"
+        - title: "Composite Scores"
+          required: true
+          format: "table with columns: Solution, Raw Score, Confidence Band, Conditional Ranking"
+        - title: "Sensitivity Analysis"
+          required: true
+          note: "For each key assumption, state how rankings would shift if wrong"
+
+    - number: 8
+      title: "Final Recommendation"
+      required: true
+      subsections:
+        - title: "Recommended Solution"
+          required: true
+        - title: "Conditions for This Recommendation"
+          required: true
+        - title: "Contingency"
+          required: true
+          format: "'If [condition changes], reconsider [solution] because [reason]'"
+        - title: "Next Steps (Priority Order)"
+          required: true
+        - title: "Decisions to Make Now vs. Defer"
+          required: true
+
+    - number: 9
+      title: "Appendix"
+      required: true
+      subsections:
+        - title: "Glossary"
+          required: true
+        - title: "References"
+          required: true
+          note: "Confluence URLs, Aha URLs, repo names"
+        - title: "Sub-Agent Research Summaries"
+          required: false
+          note: "Include if sub-agents were used"

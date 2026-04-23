@@ -1,0 +1,105 @@
+# Heuristic Patterns & Default Assumptions
+# ==========================================
+# When the architect cannot determine a factor from available data,
+# these heuristics provide reasonable defaults. Every heuristic used
+# in an analysis MUST be explicitly cited and its sensitivity noted.
+
+# Classification:
+#   KNOWN    — concrete data available; cite the source
+#   INFORMED — estimated from patterns/context; state the assumption and basis
+#   UNKNOWN  — cannot determine; use default, label it, show sensitivity
+
+team_heuristics:
+  default_team_size:
+    value: "3-5 engineers"
+    confidence: LOW
+    note: "If no team size specified, assume a small team. Adjust if org chart is available."
+
+  ramp_up_time:
+    new_language: "4-8 weeks for productive contribution"
+    new_framework: "2-4 weeks if language is known"
+    new_domain: "2-6 weeks depending on complexity"
+    confidence: MEDIUM
+    note: "Based on typical enterprise onboarding patterns."
+
+  team_velocity_impact:
+    new_technology_adoption: "30-50% velocity reduction for first 2 sprints"
+    cross_team_dependency: "20-30% overhead for coordination"
+    confidence: MEDIUM
+
+performance_heuristics:
+  database_query_latency:
+    single_row_indexed: "1-5ms"
+    join_query_indexed: "5-20ms"
+    full_table_scan_small: "50-200ms (< 100K rows)"
+    full_table_scan_large: "1-10s (> 1M rows)"
+    confidence: MEDIUM
+    note: "Varies dramatically by database, hardware, and query complexity."
+
+  api_call_latency:
+    internal_service_same_dc: "5-20ms"
+    internal_service_cross_dc: "20-100ms"
+    external_api: "100-500ms"
+    external_api_with_auth: "200-800ms"
+    confidence: MEDIUM
+
+  throughput_defaults:
+    typical_internal_api: "500-2000 TPS"
+    typical_external_api: "50-200 TPS"
+    batch_processing: "1000-10000 records/second"
+    confidence: LOW
+    note: "Highly dependent on payload size, processing complexity, and infrastructure."
+
+infrastructure_heuristics:
+  new_service_cost:
+    operational_overhead: "1-2 engineer-weeks per quarter for maintenance"
+    infrastructure_cost: "Varies; minimum viable: CI/CD pipeline + 2 environments + monitoring"
+    cognitive_overhead: "Each new service increases system mental model complexity"
+    confidence: MEDIUM
+
+  database_migration_risk:
+    schema_change_existing_table: "LOW risk if backward-compatible"
+    new_table: "LOW risk"
+    data_migration_small: "MEDIUM risk (< 1M rows)"
+    data_migration_large: "HIGH risk (> 10M rows)"
+    database_technology_change: "HIGH risk"
+    confidence: HIGH
+
+  deployment_complexity:
+    single_service_update: "LOW — standard CI/CD"
+    multi_service_coordinated: "MEDIUM — requires deployment ordering"
+    database_schema_plus_code: "MEDIUM — requires migration strategy"
+    infrastructure_change: "HIGH — requires infra team coordination"
+    confidence: HIGH
+
+organizational_heuristics:
+  conways_law_indicators:
+    - "Service boundaries that cross team boundaries increase coordination cost 2-3x"
+    - "Shared ownership of a service leads to diffusion of responsibility"
+    - "APIs between teams need more formal contracts than APIs within teams"
+    - "Cross-team changes require 1-2 additional sprints for alignment"
+    confidence: HIGH
+
+  decision_reversal_cost:
+    api_contract_change: "HIGH if external consumers exist, MEDIUM if internal only"
+    database_schema: "HIGH for destructive changes, LOW for additive changes"
+    technology_choice: "HIGH after 3+ months of investment"
+    service_boundary: "VERY HIGH once data is split"
+    configuration_change: "LOW"
+    confidence: HIGH
+
+complexity_budget_heuristics:
+  cost_per_abstraction:
+    new_service: "HIGH — new deploy pipeline, monitoring, on-call, documentation"
+    new_library: "LOW — shared code, single deploy"
+    new_queue: "MEDIUM — async complexity, dead letter handling, monitoring"
+    new_cache: "MEDIUM — invalidation logic, consistency concerns"
+    new_database: "HIGH — operational burden, backup strategy, access patterns"
+    confidence: HIGH
+
+  acceptable_complexity:
+    small_team: "2-3 services, 1 database, 0-1 queues"
+    medium_team: "4-8 services, 2-3 databases, 1-3 queues"
+    large_team: "8+ services with dedicated platform/SRE support"
+    confidence: MEDIUM
+    note: "Complexity tolerance scales with team size and operational maturity."

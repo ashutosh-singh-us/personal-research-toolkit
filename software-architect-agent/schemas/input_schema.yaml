@@ -1,0 +1,124 @@
+# Input Schema for the Software Architect Agent
+# ================================================
+# Defines the expected input format. Only problem_statement is required.
+# All other fields are optional — the agent gathers missing context via sub-agents.
+
+input:
+  problem_statement:
+    type: string
+    required: true
+    description: |
+      What needs to be solved, built, or changed. Can range from a single sentence
+      ("Add webhook delivery status tracking") to a detailed brief.
+    examples:
+      - "Add real-time webhook delivery status tracking to the webhook service"
+      - "Migrate user preferences from PostgreSQL to Cosmos DB"
+      - "Design the architecture for the enhanced identification epic (PROJ-E-456)"
+
+  business_context:
+    type: string
+    required: false
+    description: |
+      Why this matters to the business. Helps the agent prioritize trade-offs
+      and score business alignment accurately.
+    examples:
+      - "Merchants are reporting they can't tell if webhooks were delivered, causing support ticket volume to increase 40%"
+      - "Current SQL database cannot handle projected Q4 load increase"
+
+  constraints:
+    type: object
+    required: false
+    properties:
+      timeline:
+        type: string
+        description: "Delivery deadline or target date"
+        examples:
+          - "Must ship by Q3 2026"
+          - "MVP in 4 weeks, full feature in 8 weeks"
+
+      team_size:
+        type: string
+        description: "Available team composition"
+        examples:
+          - "2 backend, 1 frontend"
+          - "1 senior + 2 mid-level Java developers"
+
+      tech_stack_preferences:
+        type: string
+        description: "Technology preferences or mandates"
+        examples:
+          - "Java/Spring Boot preferred, Node.js acceptable"
+          - "Must use existing Kafka infrastructure"
+
+      regulatory:
+        type: string
+        description: "Compliance or regulatory requirements"
+        examples:
+          - "PCI-DSS scope, must not introduce new PCI boundaries"
+          - "PIPEDA compliance required for Canadian user data"
+
+      budget:
+        type: string
+        description: "Infrastructure or spending constraints"
+        examples:
+          - "No new infrastructure spend approved"
+          - "Can use existing Azure resources only"
+
+      organizational:
+        type: string
+        description: "Team ownership, org structure constraints"
+        examples:
+          - "Team X owns service A, Team Y owns service B"
+          - "No changes to the shared platform team's services without their sprint planning"
+
+  existing_systems:
+    type: array
+    required: false
+    description: "Known existing systems relevant to the problem"
+    items:
+      type: object
+      properties:
+        name:
+          type: string
+          description: "System or service name"
+        description:
+          type: string
+          description: "What the system does"
+        repo_path:
+          type: string
+          description: "Local filesystem path to the repo, if codebase analysis is needed"
+    examples:
+      - name: "webhook-service"
+        description: "Handles webhook registration, dispatch, and retry"
+        repo_path: "/Users/e124866/Projects/webhook-service"
+      - name: "notification-service"
+        description: "Sends email and push notifications"
+        repo_path: "/Users/e124866/Projects/notification-service"
+
+  aha_epic_url:
+    type: string
+    required: false
+    description: "Aha.io epic URL for product scope context"
+    examples:
+      - "https://mastercard.aha.io/epics/PROJ-E-456"
+
+  unknowns:
+    type: array
+    required: false
+    description: "Things the requester knows they don't know"
+    items:
+      type: string
+    examples:
+      - "Not sure if the existing webhook service can handle event sourcing"
+      - "Don't know what the current 99th percentile latency is"
+      - "Unsure if Team Y has capacity this quarter"
+
+  weight_overrides:
+    type: object
+    required: false
+    description: |
+      Override default scoring weights. Keys are dimension names,
+      values are decimal weights. Must sum to 1.0 if provided.
+    examples:
+      time_to_value: 0.20
+      security_compliance: 0.15

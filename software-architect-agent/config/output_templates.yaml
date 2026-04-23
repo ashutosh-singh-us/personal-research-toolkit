@@ -1,0 +1,135 @@
+# Output Document Templates
+# =========================
+# Section templates for the Architectural Analysis Document.
+# The agent uses these as structural guides — content is always generated
+# fresh based on the actual analysis.
+
+document:
+  title_format: "Architectural Analysis: {problem_title}"
+  file_name_format: "{slug}-architecture-analysis.md"
+  temp_file_format: "{slug}-temp-analysis.md"
+  output_directory: "/Users/e124866/Projects/personal-research-toolkit/output/"
+
+sections:
+  executive_summary:
+    number: 1
+    title: "Executive Summary"
+    guidance: |
+      - 3-5 sentences maximum
+      - First sentence: problem statement
+      - Second sentence: recommended solution and primary reason
+      - Third sentence: key trade-off being made
+      - Must be readable in under 2 minutes
+      - A busy engineering director should be able to make a go/no-go from this alone
+
+  problem_understanding:
+    number: 2
+    title: "Problem Understanding"
+    subsections:
+      - "Business Objective"
+      - "Technical Challenge"
+      - "Success Criteria"
+      - "Scope Boundaries"
+    guidance: |
+      - Business objective: what business outcome, not technical outcome
+      - Technical challenge: what makes this non-trivial
+      - Success criteria: measurable where possible (latency, throughput, availability)
+      - Scope: explicit in/out — prevents scope creep in the analysis itself
+
+  context_landscape:
+    number: 3
+    title: "Context Landscape"
+    subsections:
+      - "Existing Systems"
+      - "Product Scope"
+      - "Codebase Analysis"
+    guidance: |
+      - Existing Systems: populated from confluence-research-agent findings
+      - Product Scope: populated from aha-research-agent findings (if epic provided)
+      - Codebase Analysis: populated from lead_developer findings (if repos provided)
+      - Clearly attribute each finding to its source
+      - Flag contradictions between sources
+
+  assumptions_unknowns:
+    number: 4
+    title: "Assumptions & Unknowns"
+    subsections:
+      - "Known Facts (with sources)"
+      - "Assumptions (with confidence: HIGH/MEDIUM/LOW)"
+      - "Information Gaps"
+      - "Deferrable Decisions"
+    guidance: |
+      - Every assumption must state: what it is, confidence level, what changes if wrong
+      - Information gaps: what you could not find out, what would be needed
+      - Deferrable decisions: things that can wait without risk, and what triggers them
+
+  solution_proposals:
+    number: 5
+    title: "Solution Proposals"
+    per_solution_subsections:
+      - "Overview"
+      - "How It Works"
+      - "Arguments FOR This Approach"
+      - "Arguments AGAINST This Approach"
+      - "Failure Mode Analysis"
+      - "Reversibility Assessment"
+      - "Operational Impact"
+      - "Implementation Sketch"
+    guidance: |
+      - Minimum 2 solutions, maximum 4
+      - Always include a "simplest path" option
+      - Each solution gets a Mermaid architecture diagram
+      - Arguments FOR and AGAINST must be balanced — do not sandcastle your preferred option
+      - Failure mode analysis: table format (scenario, impact, detection, recovery, blast radius)
+      - Implementation sketch: T-shirt sizing (S/M/L/XL), not day estimates
+
+  comparative_analysis:
+    number: 6
+    title: "Comparative Analysis"
+    guidance: |
+      - Side-by-side table across all key dimensions
+      - Qualitative comparison, not just scores
+      - Explain WHY solutions differ on each dimension
+
+  recommendation_scoring:
+    number: 7
+    title: "Recommendation Scoring"
+    subsections:
+      - "Weights Applied"
+      - "Scores"
+      - "Composite Scores"
+      - "Sensitivity Analysis"
+    guidance: |
+      - Show the weights used (default or customized) with rationale
+      - Score table: dimension, weight, score per solution, 1-sentence justification each
+      - Composite: raw score, confidence band, conditional ranking
+      - Sensitivity: for each key assumption, how would rankings change if wrong?
+      - All math must be verifiable by the reader
+
+  final_recommendation:
+    number: 8
+    title: "Final Recommendation"
+    subsections:
+      - "Recommended Solution"
+      - "Conditions for This Recommendation"
+      - "Contingency"
+      - "Next Steps (Priority Order)"
+      - "Decisions to Make Now vs. Defer"
+    guidance: |
+      - Lead with the recommendation and WHY
+      - Conditions: what must remain true for this to be the right choice
+      - Contingency: if condition X changes, switch to solution Y because Z
+      - Next steps: actionable, with suggested owners where possible
+      - Now vs. defer: one-way doors decide now, two-way doors can wait
+
+  appendix:
+    number: 9
+    title: "Appendix"
+    subsections:
+      - "Glossary"
+      - "References"
+      - "Sub-Agent Research Summaries"
+    guidance: |
+      - Glossary: domain terms, acronyms, technical terms used in the document
+      - References: Confluence pages (with URLs), Aha epics (with URLs), repos analyzed
+      - Sub-agent summaries: condensed version of raw findings, not full dumps

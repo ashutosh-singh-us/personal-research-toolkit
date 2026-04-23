@@ -1,0 +1,15 @@
+{
+  "name": "personal-research-toolkit",
+  "version": "4.0.0",
+  "description": "CLI tools for AI agents to access enterprise Confluence (MCP) and Aha.io (REST API) behind SSO",
+  "type": "module",
+  "scripts": {
+    "api-search": "node src/api-search.js",
+    "api-read": "node src/api-read.js",
+    "api-spaces": "node src/api-spaces.js",
+    "aha-read": "node src/aha-api-read.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.0"
+  }
+}

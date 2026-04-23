@@ -1,0 +1,47 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pip3 list:*)",
+      "Bash(brew list:*)",
+      "Bash(npx md-to-pdf:*)",
+      "Bash(npx --yes md-to-pdf --version)",
+      "Bash(npx --yes md-to-pdf --stylesheet report-style.css --pdf-options '{\"\"format\"\":\"\"A4\"\",\"\"margin\"\":{\"\"top\"\":\"\"25mm\"\",\"\"bottom\"\":\"\"30mm\"\",\"\"left\"\":\"\"20mm\"\",\"\"right\"\":\"\"20mm\"\"},\"\"printBackground\"\":true}' a2a-identification-architecture-report.md)",
+      "Bash(npx --yes md-to-pdf --stylesheet report-style.css --pdf-options '{\"\"format\"\":\"\"A4\"\",\"\"margin\"\":{\"\"top\"\":\"\"20mm\"\",\"\"bottom\"\":\"\"25mm\"\",\"\"left\"\":\"\"18mm\"\",\"\"right\"\":\"\"18mm\"\"},\"\"printBackground\"\":true}' a2a-identification-architecture-report.md)",
+      "Bash(find /Users/e124866/Projects/personal-research-toolkit -type f -name package.json -o -name tsconfig.json -o -name README.md -o -name .env* -o -name *.config.js)",
+      "Bash(find /Users/e124866/Projects -name .claude -type d -exec find {} -type f)",
+      "Bash(2)",
+      "Bash(python3 -m json.tool)",
+      "Bash(curl -s -X POST http://localhost:3998 -H \"Content-Type: application/json\" -d '{\"\"\"\"jsonrpc\"\"\"\":\"\"\"\"2.0\"\"\"\",\"\"\"\"id\"\"\"\":1,\"\"\"\"method\"\"\"\":\"\"\"\"tools/list\"\"\"\",\"\"\"\"params\"\"\"\":{}}')",
+      "Bash(curl -s http://localhost:3998)",
+      "Bash(curl -s -X POST http://localhost:3998/mcp -H \"Content-Type: application/json\" -d '{\"\"\"\"jsonrpc\"\"\"\":\"\"\"\"2.0\"\"\"\",\"\"\"\"id\"\"\"\":1,\"\"\"\"method\"\"\"\":\"\"\"\"tools/list\"\"\"\",\"\"\"\"params\"\"\"\":{}}')",
+      "Bash(curl -s -X POST http://localhost:3998/sse -H \"Content-Type: application/json\" -d '{\"\"\"\"jsonrpc\"\"\"\":\"\"\"\"2.0\"\"\"\",\"\"\"\"id\"\"\"\":1,\"\"\"\"method\"\"\"\":\"\"\"\"tools/list\"\"\"\",\"\"\"\"params\"\"\"\":{}}')",
+      "Bash(curl -s -X POST http://localhost:3998/mcp -H \"Content-Type: application/json\" -d '{\"\"\"\"jsonrpc\"\"\"\":\"\"\"\"2.0\"\"\"\",\"\"\"\"id\"\"\"\":2,\"\"\"\"method\"\"\"\":\"\"\"\"tools/call\"\"\"\",\"\"\"\"params\"\"\"\":{\"\"\"\"name\"\"\"\":\"\"\"\"get_confluence_current_user\"\"\"\",\"\"\"\"arguments\"\"\"\":{}}}')",
+      "Bash(docker ps:*)",
+      "Bash(python3 -c \"import sys,json; tools=json.load\\(sys.stdin\\)[''''result''''][''''tools'''']; print\\(f''''{len\\(tools\\)} tools available:''''\\); [print\\(f''''  - {t[\"\"name\"\"]}''''\\) for t in tools]\")",
+      "WebSearch",
+      "WebFetch(domain:gofastmcp.com)",
+      "Bash(claude mcp:*)",
+      "Bash(time npm:*)",
+      "Bash(node:*)",
+      "Bash(curl -s -X POST http://localhost:3998/mcp -H \"Content-Type: application/json\" -d '{\"\"\"\"jsonrpc\"\"\"\":\"\"\"\"2.0\"\"\"\",\"\"\"\"id\"\"\"\":1,\"\"\"\"method\"\"\"\":\"\"\"\"tools/call\"\"\"\",\"\"\"\"params\"\"\"\":{\"\"\"\"name\"\"\"\":\"\"\"\"search_confluence_content\"\"\"\",\"\"\"\"arguments\"\"\"\":{\"\"\"\"cql\"\"\"\":\"\"\"\"type=page and space=\\\\\"\"\"\"TR\\\\\"\"\"\" and title~\\\\\"\"\"\"Webhook Architecture Clarity\\\\\"\"\"\"\"\"\"\",\"\"\"\"limit\"\"\"\":1}}}')",
+      "Bash(curl -s -X POST http://localhost:3998/mcp -H \"Content-Type: application/json\" -d '{\"\"\"\"jsonrpc\"\"\"\":\"\"\"\"2.0\"\"\"\",\"\"\"\"id\"\"\"\":1,\"\"\"\"method\"\"\"\":\"\"\"\"tools/call\"\"\"\",\"\"\"\"params\"\"\"\":{\"\"\"\"name\"\"\"\":\"\"\"\"search_confluence_content\"\"\"\",\"\"\"\"arguments\"\"\"\":{\"\"\"\"cql\"\"\"\":\"\"\"\"type=page and title~\\\\\"\"\"\"Webhook Architecture\\\\\"\"\"\"\"\"\"\",\"\"\"\"limit\"\"\"\":3}}}')",
+      "Bash(python3 -c \"import sys,json; print\\(json.load\\(sys.stdin\\)[''''result''''][''''content''''][0][''''text'''']\\)\")",
+      "mcp__jira__jira_search",
+      "mcp__jira__jira_get_issue",
+      "mcp__aha__get_aha_epic",
+      "mcp__aha__get_aha_features_for_epic",
+      "Bash(glab mr:*)",
+      "Bash(head -5 grep \"submitActionResultMerchantDirectSimple\\\\|submitActionResultMerchantDirectNonOffer\" /tmp/mr190-v2.diff)",
+      "Bash(ls src/main/resources/*.yml src/main/resources/*.yaml)",
+      "Bash(npm list:*)",
+      "Bash(npx --help)",
+      "Bash(python3:*)"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "confluence",
+    "aha",
+    "jira"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "confluence": {
+      "type": "http",
+      "url": "http://localhost:3998/mcp"
+    },
+    "aha": {
+      "type": "http",
+      "url": "http://localhost:4000/mcp"
+    },
+    "jira": {
+      "type": "sse",
+      "url": "http://localhost:3999/sse"
+    }
+  }
+}
